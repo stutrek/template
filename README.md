@@ -6,15 +6,14 @@
   - linting
   - type checking
 - devcontainer
-  - Node 22
+  - Node 24
   - zsh
   - command history is saved locally
 - Jest
 - Biome
-- NextJS docs site
+- NextJS site
   - Tailwind
   - MDX
-  - Pure CSS dropdowns for navigation in header
 - GitHub Actions...
   - Update docs site on push to main
   - Publish a new npm version manually

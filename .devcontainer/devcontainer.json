@@ -1,21 +1,26 @@
 {
-    "image": "mcr.microsoft.com/devcontainers/typescript-node:22",
-    "features": {},
-    "initializeCommand": "touch .devcontainer/.zsh_history",
-    "postCreateCommand": "npm install",
-    "postStartCommand": "chmod 666 /home/node/.zsh_history",
+    "image": "mcr.microsoft.com/devcontainers/typescript-node:24",
+    "features": {
+        // "ghcr.io/devcontainers/features/rust:1": {}
+    },
     "customizations": {
         "vscode": {
             "extensions": [
                 "biomejs.biome",
-                "Orta.vscode-jest",
-                "firsttris.vscode-jest-runner"
+                "orta.vscode-jest",
+                "firsttris.vscode-jest-runner",
+                "bradlc.vscode-tailwindcss",
+                // "rust-lang.rust-analyzer"
             ],
             "settings": {
                 "terminal.integrated.defaultProfile.linux": "zsh"
             }
         }
     },
+
+    "initializeCommand": "touch .devcontainer/.zsh_history",
+    "postCreateCommand": "npm install",
+    "postStartCommand": "chmod 666 /home/node/.zsh_history",
     "mounts": [
         "source=${localEnv:HOME}/.ssh,target=/home/node/.ssh,type=bind,consistency=cached",
         "source=${localWorkspaceFolder}/.devcontainer/.zsh_history,target=/home/node/.zsh_history,type=bind"

@@ -2,14 +2,52 @@ import createMDX from '@next/mdx';
 import remarkGfm from 'remark-gfm';
 import rehypeShiki from '@leafac/rehype-shiki';
 import * as shiki from 'shiki';
+import { NextConfig } from 'next';
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+const analyticsProxy = 'https://api2.amplitude.com/2/httpapi';
+
+const nextConfig: NextConfig = {
+    output: 'standalone',
+    // Add wasm support
+    webpack(config) {
+        config.experiments = {
+            asyncWebAssembly: true,
+            layers: true,
+        };
+
+        config.module.rules.push({
+            test: /\.wasm$/,
+            type: 'javascript/auto',
+            use: [
+                {
+                    loader: 'file-loader',
+                    options: {
+                        name: 'static/wasm/[name].[hash].[ext]',
+                        publicPath: '/_next/',
+                    },
+                },
+            ],
+        });
+
+        // Remove all other WASM-related config
+        return config;
+    },
     // Configure `pageExtensions` to include markdown and MDX files
     pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
     // Optionally, add any other Next.js config below
-    output: 'export',
-    basePath: '/react-multi-page-form',
+    async rewrites() {
+        return {
+            beforeFiles: [
+            ],
+            fallback: [
+                // {
+                //     source: '/mp/:path*',
+                //     destination: `${analyticsProxy}/:path*`,
+                // },
+            ],
+        };
+    },
+    skipTrailingSlashRedirect: true,
 };
 
 async function getConfig() {
