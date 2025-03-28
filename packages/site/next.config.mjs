@@ -2,12 +2,15 @@ import createMDX from '@next/mdx';
 import remarkGfm from 'remark-gfm';
 import rehypeShiki from '@leafac/rehype-shiki';
 import * as shiki from 'shiki';
-import { NextConfig } from 'next';
 
 const analyticsProxy = 'https://api2.amplitude.com/2/httpapi';
 
-const nextConfig: NextConfig = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
     output: 'standalone',
+    experimental: {
+        turbo: {},
+    },
     // Add wasm support
     webpack(config) {
         config.experiments = {
@@ -37,8 +40,7 @@ const nextConfig: NextConfig = {
     // Optionally, add any other Next.js config below
     async rewrites() {
         return {
-            beforeFiles: [
-            ],
+            beforeFiles: [],
             fallback: [
                 // {
                 //     source: '/mp/:path*',
@@ -51,36 +53,37 @@ const nextConfig: NextConfig = {
 };
 
 async function getConfig() {
-    const highlighter = await shiki.getHighlighter({
-        theme: 'light-plus',
-    });
+    return nextConfig;
+    // const highlighter = await shiki.getHighlighter({
+    //     theme: 'light-plus',
+    // });
 
-    const withMDX = createMDX({
-        extension: /\.mdx?$/,
-        // Add markdown plugins here, as desired
-        options: {
-            remarkPlugins: [remarkGfm],
-            rehypePlugins: [
-                [
-                    rehypeShiki,
-                    {
-                        highlighter,
-                        theme: 'light-plus', // You can choose from Shiki's supported themes
-                        langs: [
-                            'javascript',
-                            'typescript',
-                            'python',
-                            'css',
-                            'html',
-                        ],
-                    },
-                ],
-            ],
-        },
-    });
+    // const withMDX = createMDX({
+    //     extension: /\.mdx?$/,
+    //     // Add markdown plugins here, as desired
+    //     options: {
+    //         remarkPlugins: [remarkGfm],
+    //         rehypePlugins: [
+    //             [
+    //                 rehypeShiki,
+    //                 {
+    //                     highlighter,
+    //                     theme: 'light-plus', // You can choose from Shiki's supported themes
+    //                     langs: [
+    //                         'javascript',
+    //                         'typescript',
+    //                         'python',
+    //                         'css',
+    //                         'html',
+    //                     ],
+    //                 },
+    //             ],
+    //         ],
+    //     },
+    // });
 
-    // Merge MDX config with Next.js config
-    return withMDX(nextConfig);
+    // // Merge MDX config with Next.js config
+    // return withMDX(nextConfig);
 }
 
 export default await getConfig();

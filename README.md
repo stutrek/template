@@ -6,7 +6,7 @@
   - linting
   - type checking
 - devcontainer
-  - Node 24
+  - Node 22
   - zsh
   - command history is saved locally
 - Jest

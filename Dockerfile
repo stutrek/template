@@ -1,4 +1,4 @@
-FROM node:24-alpine as builder
+FROM node:22-alpine as builder
 
 # RUN apk add --no-cache curl gcc musl-dev
 # RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
@@ -24,7 +24,7 @@ RUN npm ci; npm cache clean --force
 COPY . .
 RUN npm run build --workspace=site
 
-FROM node:24-alpine as runner
+FROM node:22-alpine as runner
 
 WORKDIR /app
 COPY --from=builder /app/packages/site/next.config.mjs ./
