@@ -19,9 +19,12 @@
     },
 
     "initializeCommand": "touch .devcontainer/.zsh_history",
-    "postCreateCommand": "npm install",
+    "postCreateCommand": "sudo chown -R node:node /workspaces/template/node_modules && npm install",
     "postStartCommand": "chmod 666 /home/node/.zsh_history",
+    "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/template,type=bind,consistency=cached",
     "mounts": [
+        "type=volume,source=template-node_modules,target=/workspaces/template/node_modules",
+        "type=volume,source=template-packages-node_modules,target=/workspaces/template/packages/*/node_modules",
         "source=${localEnv:HOME}/.ssh,target=/home/node/.ssh,type=bind,consistency=cached",
         "source=${localWorkspaceFolder}/.devcontainer/.zsh_history,target=/home/node/.zsh_history,type=bind"
     ],

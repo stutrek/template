@@ -6,7 +6,6 @@ FROM node:22-alpine as builder
 # RUN rustup target add wasm32-unknown-unknown
 # RUN cargo install wasm-bindgen-cli
 
-
 WORKDIR /app
 
 # COPY /Cargo.toml ./
@@ -15,8 +14,6 @@ WORKDIR /app
 # COPY /scripts ./scripts
 
 COPY /package.json ./
-COPY /packages/api/package.json ./packages/api/
-COPY /packages/dictionary/package.json ./packages/dictionary/
 COPY /packages/site/package.json ./packages/site/
 COPY /package-lock.json ./package-lock.json
 

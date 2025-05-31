@@ -2,7 +2,9 @@
     "name": "project-monorepo",
     "version": "0.0.1",
     "description": "Stu's Template",
-    "workspaces": ["packages/*"],
+    "workspaces": [
+        "packages/*"
+    ],
     "files": [],
     "scripts": {
         "devcontainer": "devcontainer exec --workspace-folder=. zsh --interactive",
